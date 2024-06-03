@@ -1,4 +1,5 @@
 const { usersModel } = require('../models');
+const { generateToken } = require('../utils/token');
 
 // Criação de usuário/conta de usuário
 const createUser = async (req, res) => {
@@ -69,7 +70,8 @@ const login = async (req, res) => {
     const result = await usersModel.findByEmail(email);
     // console.log(result);
     if (result && result.senha === senha) {
-      return res.status(200).json({ message: `Login realizado com sucesso` });
+      const token = generateToken(result);
+      return res.status(200).json({ message: `Login realizado com sucesso`, token });
     } else {
       return res.status(401).json({ message: 'Email ou senha incorretos' });
     }

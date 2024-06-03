@@ -22,13 +22,20 @@ CREATE TABLE icone (
 );
 
 -- -----------------------------------------------------
+-- Adicionar dados na tabela `icone`
+-- -----------------------------------------------------
+INSERT INTO icone (caminho_icone) VALUES ('src/img/home.png');
+INSERT INTO icone (caminho_icone) VALUES ('src/img/work.png');
+INSERT INTO icone (caminho_icone) VALUES ('src/img/education.png');
+
+-- -----------------------------------------------------
 -- Table `tarefasdb`.`Lista`
 -- -----------------------------------------------------
 CREATE TABLE lista (
   id_lista INT NOT NULL AUTO_INCREMENT,
   nome_lista VARCHAR(45) NOT NULL,
   id_usuario INT NOT NULL,
-  id_icone INT NOT NULL,
+  id_icone INT NOT NULL DEFAULT 1,
   PRIMARY KEY (id_lista),
   UNIQUE(id_icone),
   CONSTRAINT fk_lista_usuario_id
