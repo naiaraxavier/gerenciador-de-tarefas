@@ -1,6 +1,27 @@
 version: '3'
 services:
-  node:
+  frontend:
+    container_name: frontend_tarefas
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    working_dir: /app-frontend
+    volumes:
+      - ./frontend/src:/app-frontend/src
+    tty: true # executa o container continuamente
+    # Os `healthcheck` devem garantir que a aplicação está
+    # operacional antes de liberar o container
+    healthcheck:
+      test: ["CMD", "lsof", "-t", "-i:3000"]
+      timeout: 10s
+      retries: 5
+    depends_on:
+      backend:
+        condition: service_healthy   
+
+  backend:
     # Faz o docker construir (build) de uma imagem personalizada
     # baseada no arquivo Dockerfile
     build: 

@@ -1,0 +1,138 @@
+.login-background {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+}
+
+.login-container {
+  align-items: center;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 2px 5px 8px hsla(60, 3%, 37%, 0.411);
+  display: flex;
+  margin: 0rem auto;
+  max-width: 1060px;
+  width: 100%;
+}
+
+.box-image {
+  background-color: #b6ebe4;
+  display: flex;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  justify-content: center;
+  max-width: 530px;
+  height: 606px;
+  width: 100%;
+}
+
+.img-logo {
+  max-width: 450px;
+  height: auto;
+  object-fit: contain;
+}
+
+.box-form {
+  background-color: #9fe5dc;
+  display: flex;
+  flex-direction: column;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  max-width: 530px;
+  height: 606px;
+  padding: 3em 0em 0em 5em;
+  width: 100%;
+}
+
+.box-form p {
+  color: #606463;
+  font-size: 20px;
+  margin: 1em 0.2em;
+}
+
+.box-form p span {
+  color: #ff6584;
+}
+
+.box-form span {
+  color: #ff6584;
+  font-size: 20px;
+}
+
+
+.login-text {
+  color: #606463;
+  font-size: 30px;
+  margin-bottom: 1em;
+}
+
+.login-input {
+  background-color: rgba(255, 255, 255, 0.542);
+  border: none;
+  border-color: transparent;
+  border-radius: 10px;
+  font-size: 16px;
+  height: 40px;
+  margin: 0.5em 0.2em;
+  padding-left: 3.5em;
+  transition: border-color 0.3s ease;
+  width: 260px
+}
+
+.input-with-icon {
+  position: relative;
+}
+
+.input-with-icon .icon {
+  color: #696969;
+  left: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.login-input::placeholder {
+  color: #696969;
+}
+
+
+.login-input:focus {
+  animation: glow 0.5s infinite alternate;
+}
+
+@keyframes glow {
+
+  from {
+    box-shadow: 0 0 5px #ff6584;
+  }
+
+  to {
+    box-shadow: 0 0 10px #ff6584;
+  }
+}
+
+.login-submit-btn:disabled {
+  background-color: #484646a4;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  height: 45px;
+  margin: 1em 0.2em;
+  width: 150px;
+}
+
+.login-submit-btn:enabled {
+  background-color: #ff6584;
+  border-radius: 10px;
+  color: white;
+  cursor: pointer;
+  height: 45px;
+  margin: 1em 0.2em;
+  width: 150px;
+}
+
+.login-submit-btn:enabled:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}

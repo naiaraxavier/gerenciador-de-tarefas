@@ -1,0 +1,25 @@
+.dashboard {
+  color: #606463;
+  display: flex;
+}
+
+.perfil-container {
+  background-color: #9fe5dc;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  height: 100vh;
+  padding: 1em;
+  max-width: 360px;
+}
+
+.lists-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.dash-title span {
+  color: #ff6584;
+}
