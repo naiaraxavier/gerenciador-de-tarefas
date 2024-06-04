@@ -16,12 +16,11 @@ const findAllByListId = async (id_lista) => {
 
 
 // Atualiza dados de uma tarefa cadastrada no banco de dados
-const updateById = async (newTask, id_tarefa) => {
-  const { descricao, data, hora, repete, id_lista } = newTask;
-  const query = 'UPDATE tarefa SET descricao = ?, data = ?, hora = ?, repete = ?, id_lista = ? WHERE id_tarefa = ?';
-  const [result] = await db.execute(query, [descricao, data, hora, repete, id_lista, id_tarefa]);
+const updateById = async (id, task) => {
+  const query = `UPDATE tarefa SET descricao = ?, data = ?, hora = ?, repete = ?, id_lista = ? WHERE id_tarefa = ?`;
+  const [result] = await conn.execute(query, [task.descricao, task.data, task.hora, task.repete, task.id_lista, id]);
   return result;
-}
+};
 
 
 // Exclui uma tarefa do banco de dados

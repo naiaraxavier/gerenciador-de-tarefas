@@ -11,7 +11,7 @@ const createTask = async (req, res) => {
     const { descricao, data, hora, repete } = req.body;
 
     // Verifica se todos os campos necessários estão presentes
-    if (!descricao || !data || !hora || !repete) {
+    if (!descricao || !data || !hora || repete == null) {
       return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
 
@@ -46,12 +46,18 @@ const updateTask = async (req, res) => {
     const { descricao, data, hora, repete } = req.body;
 
     // Verifica se todos os campos necessários estão presentes
-    if (!descricao || !data || !hora || !repete) {
+    if (!descricao || !data || !hora || repete == null) {
       return res.status(400).json({ message: 'Todos os campos são obrigatórios' });
     }
 
-    const updatedTask = await taskModel.updateById(id_tarefa, { descricao, data, hora, repete, id_lista });
-    res.status(200).json({ message: 'Tarefa atualizada com sucesso', updatedTask });
+    const result = await taskModel.updateById(id_tarefa, { descricao, data, hora, repete, id_lista });
+
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Tarefa atualizada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Tarefa não encontrada' });
+    }
+
   } catch (error) {
     console.error('Erro ao atualizar tarefa:', error);
     res.status(500).json({ message: 'Erro ao atualizar tarefa' });
@@ -62,8 +68,13 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const id_tarefa = req.params.id_tarefa;
-    await taskModel.remove(id_tarefa);
-    res.status(200).json({ message: 'Tarefa deletada com sucesso' });
+    const result = await taskModel.remove(id_tarefa);
+    if (result.affectedRows > 0) {
+      res.status(200).json({ message: 'Tarefa deletada com sucesso' });
+    } else {
+      res.status(404).json({ message: 'Tarefa não encontrada' });
+    }
+
   } catch (error) {
     console.error('Erro ao deletar tarefa:', error);
     res.status(500).json({ message: 'Erro ao deletar tarefa' });

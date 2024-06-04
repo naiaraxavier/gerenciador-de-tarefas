@@ -7,7 +7,7 @@ const router = express.Router();
 router.post("/list/:id_lista", taskController.createTask)
 
 // Rota para listar tarefas cadastradas
-router.get('"/list/:id_lista"', taskController.findAll);
+router.get("/list/:id_lista", taskController.findAll);
 
 // Rota para atualização da tarefa
 router.put("/list/:id_lista/:id_tarefa", taskController.updateTask)
