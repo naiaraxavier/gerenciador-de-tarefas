@@ -1,7 +1,8 @@
 import defaultImage from '../img/avatar.png'
-import { FaPlus } from "react-icons/fa";
 import { useEffect, useState } from 'react';
+import { FaPlus } from "react-icons/fa";
 import '../css/dashboard.css'
+import FormNewList from '../components/FormNewList';
 
 function Dashboard() {
   const [clientName, setClientName] = useState('')
@@ -42,6 +43,10 @@ function Dashboard() {
           <h1 className="dash-title">Visão geral das suas <span> listas de tarefas:</span></h1>
         </div>
 
+        <div>
+          {/* Lista de tarefas */}
+        </div>
+
         <div className='btn-new-list'>
           <button className="button-with-icon">
             <FaPlus id='plus' />
@@ -49,6 +54,8 @@ function Dashboard() {
           </button>
         </div>
       </div>
+
+      <FormNewList />
     </main>
   )
 }

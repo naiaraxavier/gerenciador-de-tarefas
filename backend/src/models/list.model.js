@@ -14,6 +14,12 @@ const findAll = async () => {
   return lists
 }
 
+// Lista os ícones cadastrados no banco de dados
+const findAllIcones = async () => {
+  const [icones] = await conn.execute('SELECT * FROM icone');
+  return icones
+}
+
 
 // Atualiza dados de uma lista cadastrada no banco de dados
 const update = async (list, id) => {
@@ -34,5 +40,6 @@ module.exports = {
   create,
   findAll,
   update,
-  remove
+  remove,
+  findAllIcones
 };

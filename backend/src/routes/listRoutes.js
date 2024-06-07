@@ -10,6 +10,9 @@ router.post("/add", authMiddleware, listController.createList)
 // Rota para listar listas cadastradas
 router.get('/', listController.findAll);
 
+// Rota para listar ícones cadastrados
+router.get('/icones', listController.findAllIcones);
+
 // Rota para atualização da lista
 router.put("/:id", listController.updateList)
 

@@ -31,6 +31,8 @@ function Login() {
 
       if (response.ok) {
         // Login bem-sucedido, armazenar o nome no local storage
+        const data = await response.json();
+        localStorage.setItem('token', data.token);
         const userInfo = JSON.stringify({ email: userData.email });
         localStorage.setItem('user', userInfo);
         setIsAuthenticated(true)

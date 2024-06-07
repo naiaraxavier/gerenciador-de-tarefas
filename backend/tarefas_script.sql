@@ -24,9 +24,9 @@ CREATE TABLE icone (
 -- -----------------------------------------------------
 -- Adicionar dados na tabela `icone`
 -- -----------------------------------------------------
-INSERT INTO icone (caminho_icone) VALUES ('src/img/home.png');
-INSERT INTO icone (caminho_icone) VALUES ('src/img/work.png');
-INSERT INTO icone (caminho_icone) VALUES ('src/img/education.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/home.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/work.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/education.png');
 
 -- -----------------------------------------------------
 -- Table `tarefasdb`.`Lista`

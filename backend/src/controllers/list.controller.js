@@ -40,6 +40,18 @@ const findAll = async (_req, res) => {
   }
 };
 
+
+// Lista todas os ícones cadastradas no banco de dados
+const findAllIcones = async (_req, res) => {
+  try {
+    const icones = await listModel.findAllIcones();
+    res.status(200).json(icones);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.sqlMessage });
+  }
+};
+
 // Atualiza lista cadastrada no banco de dados
 const updateList = async (req, res) => {
   try {
@@ -77,5 +89,6 @@ module.exports = {
   createList,
   updateList,
   findAll,
-  deleteList
+  deleteList,
+  findAllIcones
 };
