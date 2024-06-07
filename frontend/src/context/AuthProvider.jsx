@@ -4,22 +4,40 @@ import PropTypes from 'prop-types';
 
 function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    // Verifica se há um estado autenticado armazenado no localStorage
-    const storedAuth = localStorage.getItem('isAuthenticated');
-    // Se houver, converte para booleano
-    return storedAuth ? JSON.parse(storedAuth) : false;
+    // Verifica se há um token armazenado no localStorage
+    const token = localStorage.getItem('token');
+    return !!token; // Converte a presença do token para um booleano
   });
-
-  // console.log(isAuthenticated, "auth");
 
   // Atualiza o localStorage sempre que o estado autenticado mudar
   useEffect(() => {
-    localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
+    const token = localStorage.getItem('token');
+    if (!token) {
+      setIsAuthenticated(false);
+      localStorage.removeItem('isAuthenticated');
+    } else {
+      setIsAuthenticated(true);
+      localStorage.setItem('isAuthenticated', JSON.stringify(true));
+    }
   }, [isAuthenticated]);
+
+  // Função para realizar o login
+  const login = (token) => {
+    localStorage.setItem('token', token);
+    setIsAuthenticated(true);
+  };
+
+  // Função para realizar o logout
+  const logout = () => {
+    localStorage.removeItem('token');
+    setIsAuthenticated(false);
+  };
 
   const values = useMemo(() => ({
     isAuthenticated,
     setIsAuthenticated,
+    login,
+    logout
   }), [isAuthenticated, setIsAuthenticated]);
 
   return (

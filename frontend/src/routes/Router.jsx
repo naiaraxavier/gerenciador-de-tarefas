@@ -10,8 +10,6 @@ import { useContext } from 'react';
 function Router() {
   const { isAuthenticated } = useContext(AuthContext);
 
-  // console.log(isAuthenticated);
-
   return (
     <Routes>
       <Route path="/login" element={<Login />} />

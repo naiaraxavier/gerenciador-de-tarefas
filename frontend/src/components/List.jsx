@@ -11,7 +11,7 @@ function List({ listData }) {
       <div className='info-list'>
         <h2>{listData.nome_lista}</h2>
         <p>
-          {listData.tarefas.length > 1
+          {listData && listData.tarefas.length > 1
             ? `${listData.tarefas.length} tarefas`
             : `${listData.tarefas.length} tarefa`}
         </p>

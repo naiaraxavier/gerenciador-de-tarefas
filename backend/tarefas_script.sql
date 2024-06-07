@@ -27,6 +27,7 @@ CREATE TABLE icone (
 INSERT INTO icone (caminho_icone) VALUES ('../img/home.png');
 INSERT INTO icone (caminho_icone) VALUES ('../img/work.png');
 INSERT INTO icone (caminho_icone) VALUES ('../img/education.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/shopping-cart.png');
 
 -- -----------------------------------------------------
 -- Table `tarefasdb`.`Lista`

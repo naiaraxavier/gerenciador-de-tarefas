@@ -1,14 +1,16 @@
 import FormNewList from '../components/FormNewList';
 import defaultImage from '../img/avatar.png';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Loading from '../components/Loading';
 import { FaPlus } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import List from '../components/List';
+import AuthContext from '../context/AuthContext';
 import '../css/dashboard.css';
 
 function Dashboard() {
-  const [listData, setListData] = useState()
+  const { logout } = useContext(AuthContext);
+  const [listData, setListData] = useState([])
   const [loading, setLoading] = useState(true)
   const [clientName, setClientName] = useState('')
   const [isFormOpen, setIsFormOpen] = useState(false)
@@ -49,6 +51,12 @@ function Dashboard() {
     setIsFormOpen(!isFormOpen);
   };
 
+  const addNewList = (newList) => {
+    setListData(prevListData => [...prevListData, newList]);
+    // setIsFormOpen(false);
+  };
+
+
   return (
     <main className="dashboard">
       <div className="perfil-container">
@@ -61,7 +69,11 @@ function Dashboard() {
         </div>
         <div className='profile-buttons'>
           <button>Perfil</button>
-          <button>Sair</button>
+          <button
+            onClick={() => logout()}
+          >
+            Sair
+          </button>
         </div>
       </div>
 
@@ -74,14 +86,17 @@ function Dashboard() {
           {loading ? (
             <Loading />
           ) : (
-            listData ? (
+            listData.length > 0 ? (
               listData && listData.map((list) => (
                 <Link key={list.id_lista} to={`/list/${list.id_lista}`}>
                   <List listData={list} />
                 </Link>
               ))
             ) : (
-              <span>Crie sua lista de tarefas</span>
+              <div className='message-new-list'>
+                <p>Ops! Você não possui listas de tarefas</p>
+                <p>Crie já a sua primeira lista!</p>
+              </div>
             )
           )}
         </div>
@@ -98,7 +113,7 @@ function Dashboard() {
       </div>
 
       {isFormOpen && (
-        <FormNewList setIsFormOpen={setIsFormOpen} />
+        <FormNewList setIsFormOpen={setIsFormOpen} addNewList={addNewList} />
       )}
 
     </main>

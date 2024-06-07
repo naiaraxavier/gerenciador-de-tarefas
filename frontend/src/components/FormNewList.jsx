@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../css/form-new-list.css';
 
-function FormNewList({ setIsFormOpen }) {
+function FormNewList({ setIsFormOpen, addNewList }) {
   const [icones, setIcones] = useState([]);
   const [message, setMessage] = useState('');
   const [listData, setListData] = useState({
@@ -11,18 +11,30 @@ function FormNewList({ setIsFormOpen }) {
     caminho_icone: ''
   });
 
-  // console.log(listData);
+  console.log("Icones", icones);
+  console.log("ListData", listData);
 
   const fetchData = async () => {
     try {
+      let storedRemovedIcons = localStorage.getItem('removedIcons');
+      storedRemovedIcons = storedRemovedIcons ? JSON.parse(storedRemovedIcons) : [];
+      console.log(storedRemovedIcons);
+
       const response = await fetch('http://localhost:3001/lists/icones');
       const data = await response.json();
-      setIcones(data);
-      const defaultIcon = data.find(icon => icon.id_icone === 1);
-      setListData(prevListData => ({
-        ...prevListData,
-        caminho_icone: defaultIcon ? defaultIcon.caminho_icone : ''
-      }));
+
+      if (storedRemovedIcons.length > 0) {
+        setIcones(storedRemovedIcons)
+      } else {
+        setIcones(data)
+      }
+
+      // const defaultIcon = icones.find(icon => icon.id_icone === 1);
+      // setListData(prevListData => ({
+      //   ...prevListData,
+      //   caminho_icone: defaultIcon ? defaultIcon.caminho_icone : ''
+      // }));
+
     } catch (error) {
       console.error('Erro ao buscar ícones da API:', error);
     }
@@ -32,11 +44,13 @@ function FormNewList({ setIsFormOpen }) {
   const handleSelectChange = (event) => {
     const { value } = event.target;
     const icone = icones.find(icon => icon.id_icone === parseInt(value, 10));
+
     setListData(prevListData => ({
       ...prevListData,
       id_icone: parseInt(value, 10),
       caminho_icone: icone ? icone.caminho_icone : ''
     }));
+
   };
 
 
@@ -51,6 +65,11 @@ function FormNewList({ setIsFormOpen }) {
     const { nome_lista, id_icone } = listData;
     const token = localStorage.getItem('token');
 
+    if (!id_icone) {
+      setMessage('Selecione um ícone');
+      return
+    }
+
     try {
       const response = await fetch('http://localhost:3001/lists/add', {
         method: 'POST',
@@ -61,12 +80,23 @@ function FormNewList({ setIsFormOpen }) {
         body: JSON.stringify({ nome_lista, id_icone }),
       });
 
+
       if (response.ok) {
+        const newList = await response.json();
+        addNewList(newList);
+
         setListData({
           nome_lista: '',
           id_icone: 1,
+          caminho_icone: ''
         });
         setMessage('Lista criada com sucesso!');
+
+        // Remove o ícone selecionado da lista de ícones disponíveis
+        const newIcones = icones.filter(icone => icone.id_icone !== id_icone);
+        localStorage.setItem('removedIcons', JSON.stringify(newIcones));
+        setIcones(newIcones);
+
       } else {
         setMessage('Erro ao criar a lista');
       }
@@ -95,6 +125,7 @@ function FormNewList({ setIsFormOpen }) {
               value={listData.id_icone}
               onChange={handleSelectChange}
             >
+              <option value={0}>Selecione um ícone</option>
               {icones.map((icone) => (
                 <option key={icone.id_icone} value={icone.id_icone}>
                   {getFileName(icone.caminho_icone)}
@@ -140,6 +171,7 @@ function FormNewList({ setIsFormOpen }) {
 
 FormNewList.propTypes = {
   setIsFormOpen: PropTypes.func.isRequired,
+  addNewList: PropTypes.func.isRequired,
 };
 
 export default FormNewList;

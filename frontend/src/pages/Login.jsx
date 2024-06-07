@@ -6,7 +6,7 @@ import img from '../img/img-login.png';
 import '../css/login-register.css'
 
 function Login() {
-  const { setIsAuthenticated } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [userData, setUserData] = useState({
     email: '',
@@ -32,10 +32,11 @@ function Login() {
       if (response.ok) {
         // Login bem-sucedido, armazenar o nome no local storage
         const data = await response.json();
-        localStorage.setItem('token', data.token);
+
+        login(data.token)
+
         const userInfo = JSON.stringify({ email: userData.email });
         localStorage.setItem('user', userInfo);
-        setIsAuthenticated(true)
         // Login bem-sucedido, redirecionar para a página principal
         navigate('/');
       } else {

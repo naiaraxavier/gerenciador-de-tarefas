@@ -107,6 +107,16 @@
   margin: 0px 0px 80px 0px;
 }
 
+.message-new-list {
+  height: 200px;
+  margin: 50px 0px;
+  text-align: center;
+}
+
+.message-new-list p {
+  margin: 10px 0px;
+}
+
 
 .button-with-icon {
   align-items: center;
