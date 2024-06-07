@@ -1,10 +1,12 @@
 import { FaEnvelope, FaLock } from 'react-icons/fa';
 import { useNavigate, Link } from 'react-router-dom';
+import AuthContext from '../context/AuthContext';
+import { useState, useContext } from 'react';
 import img from '../img/img-login.png';
-import { useState } from 'react';
 import '../css/login-register.css'
 
 function Login() {
+  const { setIsAuthenticated } = useContext(AuthContext);
   const [errorMessage, setErrorMessage] = useState('');
   const [userData, setUserData] = useState({
     email: '',
@@ -25,9 +27,13 @@ function Login() {
         body: JSON.stringify(userData),
       });
 
-      console.log(response);
+      // console.log(response);
 
       if (response.ok) {
+        // Login bem-sucedido, armazenar o nome no local storage
+        const userInfo = JSON.stringify({ email: userData.email });
+        localStorage.setItem('user', userInfo);
+        setIsAuthenticated(true)
         // Login bem-sucedido, redirecionar para a página principal
         navigate('/');
       } else {
