@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import '../css/form-new-list.css';
 
-function FormNewList() {
+function FormNewList({ setIsFormOpen }) {
   const [icones, setIcones] = useState([]);
+  const [message, setMessage] = useState('');
   const [listData, setListData] = useState({
     nome_lista: '',
     id_icone: 1,
     caminho_icone: ''
   });
 
-  console.log(listData);
+  // console.log(listData);
 
   const fetchData = async () => {
     try {
@@ -25,6 +28,7 @@ function FormNewList() {
     }
   };
 
+
   const handleSelectChange = (event) => {
     const { value } = event.target;
     const icone = icones.find(icon => icon.id_icone === parseInt(value, 10));
@@ -35,10 +39,12 @@ function FormNewList() {
     }));
   };
 
+
   const getFileName = (path) => {
     const fileName = path.split('/').pop();
     return fileName.split('.').slice(0, -1).join('.');
   };
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -60,12 +66,12 @@ function FormNewList() {
           nome_lista: '',
           id_icone: 1,
         });
-        console.log('Lista criada com sucesso!');
+        setMessage('Lista criada com sucesso!');
       } else {
-        console.log('Erro ao criar a lista');
+        setMessage('Erro ao criar a lista');
       }
     } catch (error) {
-      console.log('Erro ao criar a lista', error.message);
+      setMessage('Erro ao criar a lista', error.message);
     }
   };
 
@@ -76,41 +82,64 @@ function FormNewList() {
 
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className='form-list-modal'>
+      <span className="close" onClick={() => setIsFormOpen(false)}>&times;</span>
+      <form onSubmit={handleSubmit} className='form-list'>
         <h2>Nova lista</h2>
 
-        <label htmlFor="icone-dropdown">ícone da lista:</label>
-        <select
-          id="icone-dropdown"
-          value={listData.id_icone}
-          onChange={handleSelectChange}
-        >
-          {icones.map((icone) => (
-            <option key={icone.id_icone} value={icone.id_icone}>
-              {getFileName(icone.caminho_icone)}
-            </option>
-          ))}
-        </select>
-
-        {listData.caminho_icone && (
-          <div key={listData.id_icone}>
-            <img src={listData.caminho_icone} alt="Ícone selecionado" width="50" height="50" />
+        <div className='select-icon'>
+          <div className='div-select-icon'>
+            <label htmlFor="icone-dropdown">ícone da lista:</label>
+            <select
+              id="icone-dropdown"
+              value={listData.id_icone}
+              onChange={handleSelectChange}
+            >
+              {icones.map((icone) => (
+                <option key={icone.id_icone} value={icone.id_icone}>
+                  {getFileName(icone.caminho_icone)}
+                </option>
+              ))}
+            </select>
           </div>
-        )}
 
-        <input
-          type="text"
-          id="name-list"
-          name="name-list"
-          placeholder="Nome da lista"
-          value={listData.nome_lista}
-          onChange={(e) => setListData({ ...listData, nome_lista: e.target.value })}
-        />
-        <button type="submit">Criar</button>
+          {listData.caminho_icone && (
+            <div key={listData.id_icone}>
+              <img src={listData.caminho_icone} alt="Ícone selecionado" className='selected-icon' />
+            </div>
+          )}
+        </div>
+
+        <div className='name-list'>
+          <input
+            type="text"
+            id="name-list"
+            name="name-list"
+            placeholder="Nome da lista"
+            value={listData.nome_lista}
+            onChange={(e) => setListData({ ...listData, nome_lista: e.target.value })}
+          />
+
+          {message && <div className='message-list'><span>{message}</span></div>}
+        </div>
+
+
+        <div className='btn-create-list'>
+          <button
+            type="submit"
+            disabled={listData.nome_lista.length < 4}
+          >
+            Criar
+          </button>
+        </div>
+
       </form>
     </div>
   )
 }
+
+FormNewList.propTypes = {
+  setIsFormOpen: PropTypes.func.isRequired,
+};
 
 export default FormNewList;

@@ -1,11 +1,14 @@
+import FormNewList from '../components/FormNewList';
 import defaultImage from '../img/avatar.png'
 import { useEffect, useState } from 'react';
 import { FaPlus } from "react-icons/fa";
 import '../css/dashboard.css'
-import FormNewList from '../components/FormNewList';
 
 function Dashboard() {
   const [clientName, setClientName] = useState('')
+  const [isFormOpen, setIsFormOpen] = useState(false)
+
+  // console.log(isFormOpen);
 
   useEffect(() => {
     // Verifica se o nome do usuário está no localStorage
@@ -21,6 +24,10 @@ function Dashboard() {
 
   const emailParts = clientName.split('@');
   const name = emailParts[0];
+
+  const handleFormClick = () => {
+    setIsFormOpen(!isFormOpen);
+  };
 
   return (
     <main className="dashboard">
@@ -48,14 +55,20 @@ function Dashboard() {
         </div>
 
         <div className='btn-new-list'>
-          <button className="button-with-icon">
+          <button
+            className="button-with-icon"
+            onClick={handleFormClick}
+          >
             <FaPlus id='plus' />
             <span>Nova Lista</span>
           </button>
         </div>
       </div>
 
-      <FormNewList />
+      {isFormOpen && (
+        <FormNewList setIsFormOpen={setIsFormOpen} />
+      )}
+
     </main>
   )
 }
