@@ -1,6 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import AuthContext from '../context/AuthContext';
 import Dashboard from '../pages/Dashboard';
+import ListDetails from '../pages/ListDetails';
 import PrivateRoute from './PrivateRoute';
 import Register from '../pages/Register';
 import Login from '../pages/Login';
@@ -22,6 +23,16 @@ function Router() {
           <PrivateRoute
             isAuthenticated={isAuthenticated}
             element={Dashboard}
+          />
+        }
+      />
+      <Route
+        path="/list/:id"
+        element=
+        {
+          <PrivateRoute
+            isAuthenticated={isAuthenticated}
+            element={ListDetails}
           />
         }
       />

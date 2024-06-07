@@ -13,6 +13,7 @@
   box-shadow: 2px 5px 8px hsla(60, 3%, 37%, 0.411);
 }
 
+
 .close {
   background-color: #fff;
   border-radius: 50%;
@@ -26,10 +27,12 @@
   cursor: pointer;
 }
 
+
 .close:hover {
   background-color: #ff6584;
   color: #fff;
 }
+
 
 .form-list {
   align-items: center;
@@ -38,6 +41,7 @@
   justify-content: center;
   padding: 50px;
 }
+
 
 .form-list h2 {
   color: #ff6584;
@@ -53,6 +57,7 @@
   margin: 20px;
 }
 
+
 .div-select-icon select {
   background-color: #fff;
   border-radius: 8px;
@@ -64,14 +69,17 @@
   width: 170px;
 }
 
+
 .div-select-icon label {
   font-size: 25px;
 }
+
 
 .selected-icon {
   width: 70px;
   height: auto;
 }
+
 
 .name-list {
   margin: 20px;
@@ -86,16 +94,19 @@
   text-align: center;
 }
 
+
 .name-list input:focus {
   background-color: #fff;
   color: #606463;
 }
+
 
 .message-list {
   color: #ff6584;
   margin-top: 20px;
   text-align: center;
 }
+
 
 .btn-create-list button {
   background-color: #ff6584;
@@ -109,11 +120,11 @@
   cursor: pointer;
 }
 
+
 .btn-create-list button:hover {
   background-color: #ff6584e9;
-  width: 166px;
-  height: 63px;
 }
+
 
 .btn-create-list button:disabled {
   background-color: #808080;

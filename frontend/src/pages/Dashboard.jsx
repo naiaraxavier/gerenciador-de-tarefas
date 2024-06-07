@@ -1,14 +1,32 @@
 import FormNewList from '../components/FormNewList';
-import defaultImage from '../img/avatar.png'
+import defaultImage from '../img/avatar.png';
 import { useEffect, useState } from 'react';
+import Loading from '../components/Loading';
 import { FaPlus } from "react-icons/fa";
-import '../css/dashboard.css'
+import { Link } from 'react-router-dom';
+import List from '../components/List';
+import '../css/dashboard.css';
 
 function Dashboard() {
+  const [listData, setListData] = useState()
+  const [loading, setLoading] = useState(true)
   const [clientName, setClientName] = useState('')
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   // console.log(isFormOpen);
+  console.log(listData);
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://localhost:3001/lists/combined-data');
+      const data = await response.json();
+      setListData(data);
+      setLoading(false);
+    } catch (error) {
+      console.error('Erro ao buscar ícones da API:', error);
+    }
+  };
+
 
   useEffect(() => {
     // Verifica se o nome do usuário está no localStorage
@@ -20,6 +38,8 @@ function Dashboard() {
         setClientName(userObject.email);
       }
     }
+
+    fetchData();
   }, []);
 
   const emailParts = clientName.split('@');
@@ -50,8 +70,20 @@ function Dashboard() {
           <h1 className="dash-title">Visão geral das suas <span> listas de tarefas:</span></h1>
         </div>
 
-        <div>
-          {/* Lista de tarefas */}
+        <div className='list-scroll'>
+          {loading ? (
+            <Loading />
+          ) : (
+            listData ? (
+              listData && listData.map((list) => (
+                <Link key={list.id_lista} to={`/list/${list.id_lista}`}>
+                  <List listData={list} />
+                </Link>
+              ))
+            ) : (
+              <span>Crie sua lista de tarefas</span>
+            )
+          )}
         </div>
 
         <div className='btn-new-list'>
