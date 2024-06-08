@@ -1,11 +1,11 @@
-import FormNewList from '../components/FormNewList';
-import defaultImage from '../img/avatar.png';
 import { useEffect, useState, useContext } from 'react';
+import FormNewList from '../components/FormNewList';
+import AuthContext from '../context/AuthContext';
+import defaultImage from '../img/avatar.png';
 import Loading from '../components/Loading';
 import { FaPlus } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import List from '../components/List';
-import AuthContext from '../context/AuthContext';
 import '../css/dashboard.css';
 
 function Dashboard() {
@@ -16,7 +16,7 @@ function Dashboard() {
   const [isFormOpen, setIsFormOpen] = useState(false)
 
   // console.log(isFormOpen);
-  console.log(listData);
+  // console.log(listData);
 
   const fetchData = async () => {
     try {
@@ -50,12 +50,6 @@ function Dashboard() {
   const handleFormClick = () => {
     setIsFormOpen(!isFormOpen);
   };
-
-  const addNewList = (newList) => {
-    setListData(prevListData => [...prevListData, newList]);
-    // setIsFormOpen(false);
-  };
-
 
   return (
     <main className="dashboard">
@@ -113,7 +107,7 @@ function Dashboard() {
       </div>
 
       {isFormOpen && (
-        <FormNewList setIsFormOpen={setIsFormOpen} addNewList={addNewList} />
+        <FormNewList setIsFormOpen={setIsFormOpen} onCreate={fetchData} />
       )}
 
     </main>

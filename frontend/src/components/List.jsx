@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import '../css/list.css'
 
 function List({ listData }) {
+  const tarefasCount = listData.tarefas ? listData.tarefas.length : 0;
+
   return (
     <div className='div-list'>
       <div className='img-icon'>
@@ -11,9 +13,9 @@ function List({ listData }) {
       <div className='info-list'>
         <h2>{listData.nome_lista}</h2>
         <p>
-          {listData && listData.tarefas.length > 1
-            ? `${listData.tarefas.length} tarefas`
-            : `${listData.tarefas.length} tarefa`}
+          {tarefasCount > 1
+            ? `${tarefasCount} tarefas`
+            : `${tarefasCount} tarefa`}
         </p>
       </div>
     </div>
