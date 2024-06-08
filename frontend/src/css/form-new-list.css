@@ -1,11 +1,11 @@
 .form-list-modal {
   position: fixed;
-  top: 60%;
+  top: 55%;
   left: 59%;
   transform: translate(-50%, -50%);
   z-index: 1000;
   width: 900px;
-  height: 600px;
+  height: 660px;
   background-color: #b6ebe4;
   border: 1px solid #ccc;
   border-radius: 15px;
