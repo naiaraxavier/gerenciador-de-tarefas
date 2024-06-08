@@ -1,0 +1,64 @@
+.info-list-container {
+  background-color: #9fe5dc;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 1em;
+  width: 360px;
+}
+
+.info-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 50px;
+}
+
+.info-content h2 {
+  color: #606463;
+  font-size: 28px;
+  font-weight: bold;
+  margin: 5px 0px;
+}
+
+.info-image {
+  background-color: #c2ece6a0;
+  border-radius: 50%;
+  box-shadow: 2px 5px 8px #61615c69;
+  height: 180px;
+  margin: 50px;
+  overflow: hidden;
+  width: 180px;
+  padding: 30px;
+}
+
+.info-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.btn-edit-delete {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-btn {
+  color: #008000;
+}
+
+.delete-btn {
+  color: #ff0000;
+}
+
+.edit-btn,
+.delete-btn {
+  font-size: 30px;
+  margin: 40px 10px;
+  cursor: pointer;
+}

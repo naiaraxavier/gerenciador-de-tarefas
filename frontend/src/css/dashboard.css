@@ -36,11 +36,12 @@
 .profile-image {
   background-color: #c2ece6a0;
   border-radius: 50%;
-  box-shadow: 2px 5px 8px hsla(60, 3%, 37%, 0.411);
+  box-shadow: 2px 5px 8px #61615c69;
   height: 180px;
   margin: 50px;
   overflow: hidden;
   width: 180px;
+  padding: 20px;
 }
 
 
