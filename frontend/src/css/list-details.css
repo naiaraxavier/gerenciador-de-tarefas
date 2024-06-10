@@ -1,3 +1,7 @@
+.list-details-container {
+  display: flex;
+}
+
 .info-list-container {
   background-color: #9fe5dc;
   border-top-right-radius: 30px;
@@ -61,4 +65,60 @@
   font-size: 30px;
   margin: 40px 10px;
   cursor: pointer;
+}
+
+
+.list-tasks-container {
+  /* align-items: center; */
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  width: 100%;
+  padding: 100px;
+}
+
+.container-list {
+  padding: 50px;
+}
+
+.container-select select {
+  cursor: pointer;
+  margin: 0px 50px;
+}
+
+
+#data-dropdown {
+  width: 32%;
+  padding: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #ff6584;
+  background-color: transparent;
+}
+
+#data-dropdown option {
+  padding: 20px;
+}
+
+
+.btn-add-task {
+  position: fixed;
+  bottom: 50px;
+  right: 100px;
+  z-index: 1000;
+}
+
+.icon-add-task {
+  color: #ff6584;
+  cursor: pointer;
+  font-size: 85px;
+}
+
+.icon-add-task:disabled {
+  color: #606463;
+}
+
+.icon-add-task:enabled:hover {
+  color: #ff6584e0;
+  font-size: 90px;
 }

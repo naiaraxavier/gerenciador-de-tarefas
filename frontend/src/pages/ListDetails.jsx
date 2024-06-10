@@ -1,17 +1,21 @@
+import FormNewTask from "../components/FormNewTask";
 import { RiDeleteBin6Fill } from "react-icons/ri";
-import { FaEdit } from "react-icons/fa";
+import { FaCirclePlus } from "react-icons/fa6";
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { FaEdit } from "react-icons/fa";
 import '../css/list-details.css'
 
 function ListDetails() {
   const [tasks, setTasks] = useState();
   const [infoList, setInfoList] = useState();
   const [isLoading, setIsLoading] = useState(true);
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [selectData, setSelectData] = useState('hoje');
 
   const { id } = useParams();
 
-  console.log(tasks, isLoading, infoList);
+  console.log(tasks, isLoading, infoList, selectData);
 
   const fetchData = async () => {
     try {
@@ -40,8 +44,17 @@ function ListDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const handleSelectChange = (event) => {
+    const { value } = event.target;
+    setSelectData(value)
+  };
+
+  const handleFormClick = () => {
+    setIsFormOpen(!isFormOpen);
+  };
+
   return (
-    <main>
+    <main className="list-details-container">
       <div className='info-list-container'>
 
         {infoList && (
@@ -59,6 +72,45 @@ function ListDetails() {
         </div>
 
       </div>
+
+      <div className="list-tasks-container">
+        <div className="container-list">
+          <div className="container-select">
+            <select
+              id="data-dropdown"
+              value={selectData}
+              onChange={handleSelectChange}
+            >
+              <option value={"hoje"}>Tarefas de hoje</option>
+              <option value={"amanha"}>Tarefas de amanhã</option>
+            </select>
+          </div>
+
+          <div>
+            {/* Tarefas concluídas */}
+          </div>
+
+          <div>
+            {/* Tarefas a fazer */}
+          </div>
+
+          <div className="btn-add-task">
+            <button
+              className="icon-add-task"
+              onClick={handleFormClick}
+              disabled={isFormOpen === true}
+            >
+              <FaCirclePlus />
+            </button>
+
+          </div>
+        </div>
+      </div>
+
+      {isFormOpen && (
+        <FormNewTask setIsFormOpen={setIsFormOpen} onCreate={fetchData} />
+      )}
+
     </main>
   )
 }
