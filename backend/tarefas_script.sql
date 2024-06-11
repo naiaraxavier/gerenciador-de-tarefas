@@ -61,6 +61,7 @@ CREATE TABLE tarefa (
   CONSTRAINT fk_tarefa_lista_id
     FOREIGN KEY (id_lista)
     REFERENCES lista(id_lista)
+    ON DELETE CASCADE
 );
 
 

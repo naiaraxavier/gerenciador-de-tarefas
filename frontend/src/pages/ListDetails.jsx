@@ -1,23 +1,23 @@
+import { useParams, useNavigate } from 'react-router-dom';
 import FormNewTask from "../components/FormNewTask";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaCirclePlus } from "react-icons/fa6";
-import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaEdit } from "react-icons/fa";
-import '../css/list-details.css'
 import Task from "../components/Task";
+import '../css/list-details.css'
 
 function ListDetails() {
   const [tasks, setTasks] = useState();
   const [infoList, setInfoList] = useState();
-  // const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [selectData, setSelectData] = useState('hoje');
   const [completedTasks, setCompletedTasks] = useState([]);
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
-  // console.log(tasks, isLoading, infoList, selectData);
+  console.log(infoList);
 
   console.log(completedTasks);
 
@@ -35,8 +35,6 @@ function ListDetails() {
       const [{ nome_lista, caminho_icone }] = infoListFilter;
 
       setInfoList({ nome_lista, caminho_icone })
-
-      // setIsLoading(false);
 
     } catch (error) {
       console.error('Erro ao buscar dados da API:', error);
@@ -85,6 +83,54 @@ function ListDetails() {
     }
   };
 
+  const handleDeleteTask = async (taskId) => {
+    try {
+      // Chama a rota de exclusão do backend
+      const response = await fetch(`http://localhost:3001/tasks/${taskId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Remove a tarefa da lista de tarefas
+        const updatedTasks = tasks.filter(task => task.id_tarefa !== taskId);
+        setTasks(updatedTasks);
+
+        // Remove a tarefa do localStorage
+        const savedCompleted = JSON.parse(localStorage.getItem('completedTasks')) || [];
+        localStorage.setItem('completedTasks', JSON.stringify(savedCompleted.filter(id => id !== taskId)));
+      } else {
+        console.error('Erro ao excluir tarefa do backend');
+      }
+    } catch (error) {
+      console.error('Erro ao excluir tarefa:', error);
+    }
+  };
+
+  const handlDeleteList = async () => {
+    try {
+      // Chama a rota de exclusão do backend
+      const response = await fetch(`http://localhost:3001/lists/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        // Recupera os ícones selecionados do localStorage
+        const selectedIcons = JSON.parse(localStorage.getItem('selectedIcons')) || [];
+
+        // Remove o ícone correspondente ao ID da lista excluída
+        const updatedSelectedIcons = selectedIcons.filter(icon => icon.caminho_icone !== infoList.caminho_icone);
+
+        // Atualiza os ícones selecionados no localStorage
+        localStorage.setItem('selectedIcons', JSON.stringify(updatedSelectedIcons));
+        navigate('/');
+      } else {
+        console.error('Erro ao excluir lista do banco de dados');
+      }
+    } catch (error) {
+      console.error('Erro ao excluir lista:', error);
+    }
+  }
+
   return (
     <main className="list-details-container">
       <div className='info-list-container'>
@@ -100,7 +146,7 @@ function ListDetails() {
 
         <div className="btn-edit-delete">
           <FaEdit className="edit-btn" />
-          <RiDeleteBin6Fill className="delete-btn" />
+          <RiDeleteBin6Fill className="delete-btn" onClick={handlDeleteList} />
         </div>
 
       </div>
@@ -122,14 +168,19 @@ function ListDetails() {
             {/* Tarefas concluídas */}
           </div>
 
-          <div>
+          <div className="tasks-list">
             {/* Tarefas a fazer */}
             {filteredTasks && filteredTasks.length > 0 ? (
               filteredTasks.map(task => (
-                <Task key={task.id_tarefa} task={task} onToggleComplete={handleToggleComplete} />
+                <Task
+                  key={task.id_tarefa}
+                  task={task}
+                  onToggleComplete={handleToggleComplete}
+                  onDelete={handleDeleteTask}
+                />
               ))
             ) : (
-              <span>Crie sua primeira tarefa</span>
+              <span>Vocẽ não tem tarefas agendadas</span>
             )}
           </div>
 

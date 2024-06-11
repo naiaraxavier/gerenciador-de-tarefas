@@ -122,3 +122,16 @@
   color: #ff6584e0;
   font-size: 90px;
 }
+
+
+.tasks-list span {
+  color: #606463;
+  margin-top: 100px;
+}
+
+.tasks-list {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

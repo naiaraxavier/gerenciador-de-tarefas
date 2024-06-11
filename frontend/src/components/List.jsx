@@ -2,7 +2,12 @@ import PropTypes from 'prop-types';
 import '../css/list.css'
 
 function List({ listData }) {
-  const tarefasCount = listData.tarefas ? listData.tarefas.length : 0;
+  // Obter as IDs das tarefas concluídas do localStorage
+  const completedTaskIds = JSON.parse(localStorage.getItem('completedTasks')) || [];
+
+  // Filtrar as tarefas para excluir as que estão no localStorage
+  const filteredTarefas = listData.tarefas ? listData.tarefas.filter(task => !completedTaskIds.includes(task.id_tarefa)) : [];
+  const tarefasCount = filteredTarefas.length;
 
   return (
     <div className='div-list'>

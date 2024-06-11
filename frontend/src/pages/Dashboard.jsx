@@ -51,6 +51,7 @@ function Dashboard() {
     setIsFormOpen(!isFormOpen);
   };
 
+
   return (
     <main className="dashboard">
       <div className="perfil-container">

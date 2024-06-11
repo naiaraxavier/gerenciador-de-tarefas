@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import { RiDeleteBin6Fill } from "react-icons/ri";
+import { useState, useEffect } from 'react';
 import { FaEdit } from "react-icons/fa";
-import { useState } from 'react';
+import PropTypes from 'prop-types';
+import '../css/task.css';
 
-function Task({ task, onToggleComplete }) {
+function Task({ task, onToggleComplete, onDelete }) {
   const [completed, setCompleted] = useState(false);
 
   console.log(completed);
@@ -12,6 +13,14 @@ function Task({ task, onToggleComplete }) {
   const handleCheckboxChange = () => {
     setCompleted(!completed);
     onToggleComplete(task, completed);
+
+    // Salvar no localStorage
+    const savedCompleted = JSON.parse(localStorage.getItem('completedTasks')) || [];
+    if (!completed) {
+      localStorage.setItem('completedTasks', JSON.stringify([...savedCompleted, task.id_tarefa]));
+    } else {
+      localStorage.setItem('completedTasks', JSON.stringify(savedCompleted.filter(id => id !== task.id_tarefa)));
+    }
   };
 
   const hoursFormated = (hoursData) => {
@@ -21,24 +30,40 @@ function Task({ task, onToggleComplete }) {
     return `${hours.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}`;
   }
 
+  useEffect(() => {
+    // Carregar estado inicial do localStorage
+    const savedCompleted = JSON.parse(localStorage.getItem('completedTasks')) || [];
+    if (savedCompleted.includes(task.id_tarefa)) {
+      setCompleted(true);
+    }
+  }, [task.id_tarefa]);
+
+  const handleDeleteClick = () => {
+    onDelete(task.id_tarefa);
+  };
+
 
   return (
-    <div>
-      <div>
+    <div className={`container-task ${completed ? 'completed' : ''}`}>
+      <div className="task-info">
         <input
           type="checkbox"
           id={`task-${task.id_tarefa}`}
           checked={completed}
           onChange={handleCheckboxChange}
+          className="custom-checkbox"
         />
-        <label htmlFor={`task-${task.id_tarefa}`}>{task.descricao}</label>
 
-        <p>{hoursFormated(task.hora)} hrs</p>
+        <div>
+          <label htmlFor={`task-${task.id_tarefa}`}>{task.descricao}</label>
+          <p>{hoursFormated(task.hora)} hrs</p>
+        </div>
+
       </div>
 
-      <div className="btn-edit-delete">
+      <div className="btn-edit-delete-task">
         <FaEdit className="edit-task-btn" />
-        <RiDeleteBin6Fill className="delete-task-btn" />
+        <RiDeleteBin6Fill className="delete-task-btn" onClick={handleDeleteClick} />
       </div>
 
     </div>
@@ -55,6 +80,7 @@ Task.propTypes = {
     repete: PropTypes.number.isRequired,
   }).isRequired,
   onToggleComplete: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 
