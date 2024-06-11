@@ -5,17 +5,21 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { FaEdit } from "react-icons/fa";
 import '../css/list-details.css'
+import Task from "../components/Task";
 
 function ListDetails() {
   const [tasks, setTasks] = useState();
   const [infoList, setInfoList] = useState();
-  const [isLoading, setIsLoading] = useState(true);
+  // const [isLoading, setIsLoading] = useState(true);
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [selectData, setSelectData] = useState('hoje');
+  const [completedTasks, setCompletedTasks] = useState([]);
 
   const { id } = useParams();
 
-  console.log(tasks, isLoading, infoList, selectData);
+  // console.log(tasks, isLoading, infoList, selectData);
+
+  console.log(completedTasks);
 
   const fetchData = async () => {
     try {
@@ -32,7 +36,7 @@ function ListDetails() {
 
       setInfoList({ nome_lista, caminho_icone })
 
-      setIsLoading(false);
+      // setIsLoading(false);
 
     } catch (error) {
       console.error('Erro ao buscar dados da API:', error);
@@ -51,6 +55,34 @@ function ListDetails() {
 
   const handleFormClick = () => {
     setIsFormOpen(!isFormOpen);
+  };
+
+  // Função para filtrar as tarefas com base na opção selecionada em selectData
+  const filteredTasks = tasks && tasks.filter(task => {
+    // Obter a data de hoje no fuso horário local
+    const today = new Date();
+    const localToday = new Date(today.getFullYear(), today.getMonth(), today.getDate()).toISOString().slice(0, 10);
+    // Obter a data de amanhã no fuso horário local
+    const tomorrow = new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1).toISOString().slice(0, 10);
+
+    if (selectData === 'hoje') {
+      return task.data.slice(0, 10) === localToday;
+    } else if (selectData === 'amanha') {
+      return task.data.slice(0, 10) === tomorrow;
+    }
+    return true;
+  });
+
+  // console.log(filteredTasks);
+
+  const handleToggleComplete = (task, isCompleted) => {
+    if (isCompleted) {
+      // Adicionar tarefa concluída à lista de tarefas concluídas
+      setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, task]);
+    } else {
+      // Remover tarefa concluída da lista de tarefas concluídas
+      setCompletedTasks(prevCompletedTasks => prevCompletedTasks.filter(t => t.id_tarefa !== task.id_tarefa));
+    }
   };
 
   return (
@@ -92,6 +124,13 @@ function ListDetails() {
 
           <div>
             {/* Tarefas a fazer */}
+            {filteredTasks && filteredTasks.length > 0 ? (
+              filteredTasks.map(task => (
+                <Task key={task.id_tarefa} task={task} onToggleComplete={handleToggleComplete} />
+              ))
+            ) : (
+              <span>Crie sua primeira tarefa</span>
+            )}
           </div>
 
           <div className="btn-add-task">
