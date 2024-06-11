@@ -12,6 +12,13 @@ O gerenciador de tarefas é uma aplicação simples e intuitiva projetada para a
 
 ## 🖥️ Front-end
 
+<div style="text-align:center;">
+    <div style="margin-bottom: 20px;">
+        <img src="./img-readme/login.png" alt="Login" style="width: 300px; height: auto;">
+        <img src="./img-readme/tarefas.png" alt="Tarefas" style="width: 300px; height: auto;">
+    </div>
+</div>
+
 ### Tecnologias Utilizadas:
 
 - **Linguagem de Programação:** JavaScript
@@ -76,6 +83,12 @@ docker-compose up -d
 
 ----
 ## 👩🏽‍💻 Back-end
+
+<div style="text-align:center;">
+    <div style="margin-bottom: 20px;">
+        <img src="./img-readme/backend-app.png" alt="Login" style="width: 300px; height: auto;">
+    </div>
+</div>
 
 ### Tecnologias Utilizadas:
 
