@@ -6,9 +6,17 @@ O gerenciador de tarefas é uma aplicação simples e intuitiva projetada para a
 
 ## Índice
 
+- [Protótipo](#protótipo)
 - [Front-end](#🖥️-front-end)
 - [Back-end](#👩🏽‍💻-back-end)
 - [Feedback e Contato](#feedback-e-contato)
+
+---
+
+## Protótipo
+O protótipo deste projeto foi desenvolvido utilizando o Figma, uma plataforma de design colaborativo. Você pode visualizar o protótipo [aqui](https://www.figma.com/design/DDxN7m4FffCIwqhsITeNR0/Gerenciador-de-Tarefas---HOW-VI?node-id=0-1&t=KiXNLKrrj94sdsIL-0), onde encontrará uma representação visual das telas e fluxos de interação do aplicativo.
+
+---
 
 ## 🖥️ Front-end
 
