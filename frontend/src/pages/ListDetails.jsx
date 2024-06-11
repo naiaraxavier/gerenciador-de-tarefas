@@ -75,10 +75,10 @@ function ListDetails() {
 
   const handleToggleComplete = (task, isCompleted) => {
     if (isCompleted) {
-      // Adicionar tarefa concluída à lista de tarefas concluídas
+      // Adiciona tarefa concluída à lista de tarefas concluídas
       setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, task]);
     } else {
-      // Remover tarefa concluída da lista de tarefas concluídas
+      // Remove tarefa concluída da lista de tarefas concluídas
       setCompletedTasks(prevCompletedTasks => prevCompletedTasks.filter(t => t.id_tarefa !== task.id_tarefa));
     }
   };
@@ -180,7 +180,7 @@ function ListDetails() {
                 />
               ))
             ) : (
-              <span>Vocẽ não tem tarefas agendadas</span>
+              <span>Você não tem tarefas agendadas</span>
             )}
           </div>
 

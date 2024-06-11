@@ -1,4 +1,4 @@
-# Gerenciador de tarefas
+# Gerenciador de tarefas  📝
 
 ## Descrição
 
