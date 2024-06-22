@@ -1,0 +1,77 @@
+.container-task {
+  display: flex;
+  justify-content: space-between;
+  width: 80%;
+  margin: 20px 80px;
+}
+
+.task-info {
+  display: flex;
+  justify-content: space-around;
+}
+
+.task-info label {
+  color: #606463;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.task-info p {
+  color: #606463;
+  font-size: 20px;
+}
+
+.task-info input {
+  margin: 0px 20px;
+}
+
+/* Estilizar o checkbox padrão */
+.task-info input[type="checkbox"] {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #606463;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  outline: none;
+  cursor: pointer;
+}
+
+/* Estilizar o estado marcado do checkbox */
+.task-info input[type="checkbox"]:checked {
+  background-color: #8fe1D7;
+  border-color: #8fe1D7;
+}
+
+.completed label,
+.completed p {
+  text-decoration: line-through;
+  color: #8fe1D7;
+}
+
+
+.completed .btn-edit-delete-task {
+  display: none;
+}
+
+.btn-edit-delete-task {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-task-btn {
+  font-size: 35px;
+  color: #008000;
+  cursor: pointer;
+  margin: 0px 10px;
+}
+
+
+.delete-task-btn {
+  font-size: 35px;
+  color: #ff0000;
+  cursor: pointer;
+  margin: 0px 10px;
+}

@@ -1,0 +1,131 @@
+.form-list-modal {
+  position: fixed;
+  top: 55%;
+  left: 59%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  width: 900px;
+  height: 660px;
+  background-color: #b6ebe4;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  padding: 50px;
+  box-shadow: 2px 5px 8px hsla(60, 3%, 37%, 0.411);
+}
+
+
+.close {
+  background-color: #fff;
+  border-radius: 50%;
+  color: #ff6584;
+  font-size: 45px;
+  font-weight: bold;
+  padding: 8px 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+
+.close:hover {
+  background-color: #ff6584;
+  color: #fff;
+}
+
+
+.form-list {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+
+
+.form-list h2 {
+  color: #ff6584;
+  font-size: 30px;
+  font-weight: bold;
+  margin: 5px;
+  text-transform: uppercase;
+}
+
+.select-icon {
+  align-items: center;
+  display: flex;
+  margin: 20px;
+}
+
+
+.div-select-icon select {
+  background-color: #fff;
+  border-radius: 8px;
+  font-size: 25px;
+  color: #606463;
+  height: 40px;
+  margin: 0px 20px 0px 5px;
+  text-align: center;
+  width: 170px;
+}
+
+
+.div-select-icon label {
+  font-size: 25px;
+}
+
+
+.selected-icon {
+  width: 70px;
+  height: auto;
+}
+
+
+.name-list {
+  margin: 20px;
+}
+
+
+.name-list input {
+  border-radius: 8px;
+  font-size: 25px;
+  height: 50px;
+  width: 440px;
+  text-align: center;
+}
+
+
+.name-list input:focus {
+  background-color: #fff;
+  color: #606463;
+}
+
+
+.message-list {
+  color: #ff6584;
+  margin-top: 20px;
+  text-align: center;
+}
+
+
+.btn-create-list button {
+  background-color: #ff6584;
+  border-radius: 10px;
+  width: 165px;
+  height: 62px;
+  margin-top: 15px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
+
+
+.btn-create-list button:hover {
+  background-color: #ff6584e9;
+}
+
+
+.btn-create-list button:disabled {
+  background-color: #808080;
+}

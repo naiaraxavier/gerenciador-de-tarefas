@@ -1,6 +1,7 @@
 const { listModel } = require('../models');
 const { getUserIdFromToken } = require('../utils/token');
 
+
 // Cria lista para organizar as tarefas
 const createList = async (req, res) => {
   try {
@@ -29,6 +30,7 @@ const createList = async (req, res) => {
   }
 };
 
+
 // Lista todas as listas cadastradas no banco de dados
 const findAll = async (_req, res) => {
   try {
@@ -39,6 +41,31 @@ const findAll = async (_req, res) => {
     res.status(500).json({ message: err.sqlMessage });
   }
 };
+
+
+// Lista todas as listas/ícone/tarefas cadastradas no banco de dados
+const findAllCombinedData = async (_req, res) => {
+  try {
+    const lists = await listModel.findAllWithJoin();
+    res.status(200).json(lists);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.sqlMessage });
+  }
+};
+
+
+// Lista todas os ícones cadastradas no banco de dados
+const findAllIcones = async (_req, res) => {
+  try {
+    const icones = await listModel.findAllIcones();
+    res.status(200).json(icones);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ message: err.sqlMessage });
+  }
+};
+
 
 // Atualiza lista cadastrada no banco de dados
 const updateList = async (req, res) => {
@@ -55,6 +82,7 @@ const updateList = async (req, res) => {
     res.status(500).json({ message: err.sqlMessage });
   }
 };
+
 
 // Exclui uma lista do banco de dados
 const deleteList = async (req, res) => {
@@ -73,9 +101,12 @@ const deleteList = async (req, res) => {
   }
 }
 
+
 module.exports = {
+  findAll,
   createList,
   updateList,
-  findAll,
-  deleteList
+  deleteList,
+  findAllIcones,
+  findAllCombinedData,
 };

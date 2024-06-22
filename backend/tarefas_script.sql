@@ -24,9 +24,10 @@ CREATE TABLE icone (
 -- -----------------------------------------------------
 -- Adicionar dados na tabela `icone`
 -- -----------------------------------------------------
-INSERT INTO icone (caminho_icone) VALUES ('src/img/home.png');
-INSERT INTO icone (caminho_icone) VALUES ('src/img/work.png');
-INSERT INTO icone (caminho_icone) VALUES ('src/img/education.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/home.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/work.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/education.png');
+INSERT INTO icone (caminho_icone) VALUES ('../img/shopping-cart.png');
 
 -- -----------------------------------------------------
 -- Table `tarefasdb`.`Lista`
@@ -60,6 +61,7 @@ CREATE TABLE tarefa (
   CONSTRAINT fk_tarefa_lista_id
     FOREIGN KEY (id_lista)
     REFERENCES lista(id_lista)
+    ON DELETE CASCADE
 );
 
 

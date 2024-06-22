@@ -1,0 +1,43 @@
+.div-list {
+  align-items: center;
+  background-color: #FFFFFF;
+  border: 1px solid #606463;
+  border-radius: 15px;
+  color: #444545;
+  display: flex;
+  justify-content: center;
+  margin: 15px 0px;
+  width: 428px;
+  height: 95px;
+  cursor: pointer;
+}
+
+.div-list:hover {
+  background-color: #606463b9;
+  color: #fff;
+}
+
+
+.img-icon {
+  width: 60px;
+  margin: 0px 10px;
+}
+
+.img-icon img {
+  width: 60px;
+}
+
+.info-list {
+  font-size: 25px;
+  margin: 0px 20px;
+}
+
+.info-list h2 {
+  font-size: 25px;
+  margin: 3px 0px;
+}
+
+.info-list p {
+  font-size: 20px;
+  margin: 3px 0px;
+}
