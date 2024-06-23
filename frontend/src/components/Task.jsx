@@ -4,15 +4,15 @@ import { FaEdit } from "react-icons/fa";
 import PropTypes from 'prop-types';
 import '../css/task.css';
 
-function Task({ task, onToggleComplete, onDelete }) {
+function Task({ task, onDelete, onEdit }) {
   const [completed, setCompleted] = useState(false);
 
-  console.log(completed);
+  // console.log(completed);
 
 
   const handleCheckboxChange = () => {
     setCompleted(!completed);
-    onToggleComplete(task, completed);
+    // onToggleComplete(task, completed);
 
     // Salvar no localStorage
     const savedCompleted = JSON.parse(localStorage.getItem('completedTasks')) || [];
@@ -42,6 +42,10 @@ function Task({ task, onToggleComplete, onDelete }) {
     onDelete(task.id_tarefa);
   };
 
+  const handleEditClick = () => {
+    onEdit(task)
+  };
+
 
   return (
     <div className={`container-task ${completed ? 'completed' : ''}`}>
@@ -62,7 +66,7 @@ function Task({ task, onToggleComplete, onDelete }) {
       </div>
 
       <div className="btn-edit-delete-task">
-        <FaEdit className="edit-task-btn" />
+        <FaEdit className="edit-task-btn" onClick={handleEditClick} />
         <RiDeleteBin6Fill className="delete-task-btn" onClick={handleDeleteClick} />
       </div>
 
@@ -79,8 +83,9 @@ Task.propTypes = {
     id_tarefa: PropTypes.number.isRequired,
     repete: PropTypes.number.isRequired,
   }).isRequired,
-  onToggleComplete: PropTypes.func.isRequired,
+  // onToggleComplete: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
 };
 
 

@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import FormNewTask from "../components/FormNewTask";
+import FormNewList from '../components/FormNewList';
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useEffect, useState } from 'react';
@@ -10,16 +11,19 @@ import '../css/list-details.css'
 function ListDetails() {
   const [tasks, setTasks] = useState();
   const [infoList, setInfoList] = useState();
+  const [editTask, setEditTask] = useState(null);
+  const [isEditing, setIsEditing] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isFormEditOpen, setIsFormEditOpen] = useState(false)
   const [selectData, setSelectData] = useState('hoje');
-  const [completedTasks, setCompletedTasks] = useState([]);
+  // const [completedTasks, setCompletedTasks] = useState([]);
 
   const { id } = useParams();
   const navigate = useNavigate();
 
-  console.log(infoList);
+  // console.log(infoList);
 
-  console.log(completedTasks);
+  // console.log(completedTasks);
 
   const fetchData = async () => {
     try {
@@ -71,17 +75,16 @@ function ListDetails() {
     return true;
   });
 
-  // console.log(filteredTasks);
 
-  const handleToggleComplete = (task, isCompleted) => {
-    if (isCompleted) {
-      // Adiciona tarefa concluída à lista de tarefas concluídas
-      setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, task]);
-    } else {
-      // Remove tarefa concluída da lista de tarefas concluídas
-      setCompletedTasks(prevCompletedTasks => prevCompletedTasks.filter(t => t.id_tarefa !== task.id_tarefa));
-    }
-  };
+  // const handleToggleComplete = (task, isCompleted) => {
+  //   if (isCompleted) {
+  //     // Adiciona tarefa concluída à lista de tarefas concluídas
+  //     setCompletedTasks(prevCompletedTasks => [...prevCompletedTasks, task]);
+  //   } else {
+  //     // Remove tarefa concluída da lista de tarefas concluídas
+  //     setCompletedTasks(prevCompletedTasks => prevCompletedTasks.filter(t => t.id_tarefa !== task.id_tarefa));
+  //   }
+  // };
 
   const handleDeleteTask = async (taskId) => {
     try {
@@ -104,6 +107,12 @@ function ListDetails() {
     } catch (error) {
       console.error('Erro ao excluir tarefa:', error);
     }
+  };
+
+  const handleEditTask = (task) => {
+    setEditTask(task);
+    setIsEditing(true);
+    setIsFormOpen(true);
   };
 
   const handlDeleteList = async () => {
@@ -131,6 +140,11 @@ function ListDetails() {
     }
   }
 
+  const handleEditList = () => {
+    console.log("Editar Lista");
+    setIsFormEditOpen(!isFormEditOpen);
+  }
+
   return (
     <main className="list-details-container">
       <div className='info-list-container'>
@@ -145,7 +159,7 @@ function ListDetails() {
         )}
 
         <div className="btn-edit-delete">
-          <FaEdit className="edit-btn" />
+          <FaEdit className="edit-btn" onClick={handleEditList} />
           <RiDeleteBin6Fill className="delete-btn" onClick={handlDeleteList} />
         </div>
 
@@ -164,10 +178,6 @@ function ListDetails() {
             </select>
           </div>
 
-          <div>
-            {/* Tarefas concluídas */}
-          </div>
-
           <div className="tasks-list">
             {/* Tarefas a fazer */}
             {filteredTasks && filteredTasks.length > 0 ? (
@@ -175,8 +185,9 @@ function ListDetails() {
                 <Task
                   key={task.id_tarefa}
                   task={task}
-                  onToggleComplete={handleToggleComplete}
+                  // onToggleComplete={handleToggleComplete}
                   onDelete={handleDeleteTask}
+                  onEdit={handleEditTask}
                 />
               ))
             ) : (
@@ -198,7 +209,17 @@ function ListDetails() {
       </div>
 
       {isFormOpen && (
-        <FormNewTask setIsFormOpen={setIsFormOpen} onCreate={fetchData} />
+        <FormNewTask
+          setIsFormOpen={setIsFormOpen}
+          onCreate={fetchData}
+          isEditing={isEditing}
+          setIsEditing={setIsEditing}
+          editTask={editTask}
+        />
+      )}
+
+      {isFormEditOpen && (
+        <FormNewList setIsFormEditOpen={setIsFormEditOpen} />
       )}
 
     </main>
