@@ -83,7 +83,7 @@ function Dashboard() {
           ) : (
             listData.length > 0 ? (
               listData && listData.map((list) => (
-                <Link key={list.id_lista} to={`/list/${list.id_lista}`}>
+                <Link key={list.id_lista} to={`/list/${list.id_lista}`} >
                   <List listData={list} />
                 </Link>
               ))

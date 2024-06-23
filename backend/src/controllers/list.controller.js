@@ -5,10 +5,10 @@ const { getUserIdFromToken } = require('../utils/token');
 // Cria lista para organizar as tarefas
 const createList = async (req, res) => {
   try {
-    // Capture o ID do usuário logado
+    // Captura o ID do usuário logado
     const token = req.headers.authorization.split(' ')[1];
     const userId = getUserIdFromToken(token);
-    // console.log("OIII", userId);
+    // console.log(userId);
     if (!userId) {
       return res.status(401).json({ message: 'Unauthorized user' });
     }
@@ -16,7 +16,7 @@ const createList = async (req, res) => {
     // Outros dados da lista recebidos no corpo da requisição
     const { nome_lista, id_icone } = req.body;
 
-    // Crie a nova lista
+    // Cria a nova lista
     const novaListaId = await listModel.create({
       nome_lista: nome_lista,
       id_usuario: userId,

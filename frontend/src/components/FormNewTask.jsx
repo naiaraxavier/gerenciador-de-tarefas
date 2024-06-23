@@ -1,19 +1,31 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../css/form-new-task.css';
 import { useParams } from 'react-router-dom';
 
-function FormNewTask({ setIsFormOpen, onCreate }) {
+function FormNewTask({ setIsFormOpen, onCreate, isEditing, setIsEditing, editTask }) {
   const [message, setMessage] = useState('');
   const [taskData, setTaskData] = useState({
     descricao: '',
     data: '',
     hora: '',
-    repete: ''
+    repete: false
   });
 
   const { id } = useParams();
   console.log(taskData, id);
+  console.log(editTask)
+
+  useEffect(() => {
+    if (isEditing && editTask) {
+      setTaskData({
+        descricao: editTask.descricao || '',
+        data: editTask.data || '',
+        hora: editTask.hora ? editTask.hora.split(' ')[1] : '', // Extrair a hora
+        repete: editTask.repete || false
+      });
+    }
+  }, [isEditing, editTask]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,11 +37,11 @@ function FormNewTask({ setIsFormOpen, onCreate }) {
       data,
       hora: `${data} ${hora}`,
       repete,
-    }
+    };
 
     try {
-      const response = await fetch(`http://localhost:3001/tasks/list/${id}`, {
-        method: 'POST',
+      const response = await fetch(`http://localhost:3001/tasks/list/${id}/${isEditing ? `${editTask.id_tarefa}` : ''}`, {
+        method: isEditing ? 'PUT' : 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -41,26 +53,27 @@ function FormNewTask({ setIsFormOpen, onCreate }) {
           descricao: '',
           data: '',
           hora: '',
-          repete: ''
+          repete: false
         });
-        setMessage('Tarefa criada com sucesso!');
+        setMessage(`Tarefa ${isEditing ? 'editada' : 'criada'} com sucesso!`);
         onCreate();
         setIsFormOpen(false);
+        setIsEditing(false);
 
       } else {
-        setMessage('Erro ao criar a tarefa');
+        setMessage(`Erro ao ${isEditing ? 'editar' : 'criar'} a tarefa`);
       }
     } catch (error) {
-      setMessage('Erro ao criar a tarefa', error.message);
+      setMessage(`Erro ao ${isEditing ? 'editar' : 'criar'} a tarefa: ${error.message}`);
     }
   };
 
 
   return (
     <div className='form-task-modal'>
-      <span className="close-tsk" onClick={() => setIsFormOpen(false)}>&times;</span>
+      <span className="close-tsk" onClick={() => { setIsFormOpen(false); setIsEditing(false) }}>&times;</span>
       <form onSubmit={handleSubmit} className='form-task'>
-        <h2>Nova tarefa</h2>
+        <h2>{isEditing ? "Editar" : "Nova"} tarefa</h2>
 
         <div className='inputs-container'>
           <div className='description-task'>
@@ -117,8 +130,9 @@ function FormNewTask({ setIsFormOpen, onCreate }) {
           <button
             type="submit"
             disabled={taskData.descricao.length < 5 || !taskData.data || !taskData.hora}
+          // onClick={setIsEditing(false)}
           >
-            Criar
+            {isEditing ? "Editar" : "Criar"}
           </button>
         </div>
 
@@ -130,6 +144,16 @@ function FormNewTask({ setIsFormOpen, onCreate }) {
 FormNewTask.propTypes = {
   setIsFormOpen: PropTypes.func.isRequired,
   onCreate: PropTypes.func.isRequired,
+  isEditing: PropTypes.bool.isRequired,
+  setIsEditing: PropTypes.bool.isRequired,
+  editTask: PropTypes.shape({
+    data: PropTypes.string.isRequired,
+    descricao: PropTypes.string.isRequired,
+    hora: PropTypes.string.isRequired,
+    id_lista: PropTypes.number.isRequired,
+    id_tarefa: PropTypes.number.isRequired,
+    repete: PropTypes.number.isRequired,
+  }).isRequired,
 };
 
 export default FormNewTask
